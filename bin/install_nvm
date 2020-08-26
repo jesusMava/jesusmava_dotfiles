@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+source ./lib/utils
+source $HOME/.nvm/nvm.sh;
+
+install_nvm() {
+  if command_exists "nvm"; then
+    header "nvm already installed"
+  else
+    header "nvm not found, installing..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+    success "Appending nvm source string to ~/.zshrc"
+    printf "\\nexport NVM_DIR=\"\$HOME/.nvm\"\\n[ -s \"\$NVM_DIR/nvm.sh\" ] && \\. \"\$NVM_DIR/nvm.sh\"  # This loads nvm\\n[ -s \"\$NVM_DIR/bash_completion\" ] && \\. \"\$NVM_DIR/nvm.sh\"  # This loads nvm bash_completion\n" >> $HOME/.zshrc
+
+  fi
+}
+
+install_nvm

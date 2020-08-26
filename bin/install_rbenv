@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+source ./lib/utils
+
+install_rbenv() {
+  if command_exists "rbenv"; then
+    header "rbenv allready installed"
+  else
+    header "rbenv not found, installing..."
+
+    git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+
+    success "rvm installed"
+  fi
+}
+
+install_rbenv

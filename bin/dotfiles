@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+DOTFILES_PATH="${HOME}/.dotfiles"
+DOTFILES_TARBALL_PATH="https://github.com/jesusMava/jesusmava_dotfiles/tarball/master"
+DOTFILES_GIT_REMOTE="git@github.com:jesusMava/dotfiles.git"
+
+# Help text
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  source ./lib/help
+
+  run_help
+  exit
+fi
+
+# Download dotfiles repository if missing
+if [[ ! -d ${DOTFILES_PATH} ]]; then
+  printf "$(tput setaf 64)Downloading dotfiles...\n"
+  mkdir ${DOTFILES_PATH}
+  curl -fsSLo ${HOME}dotfiles.tar.gz ${DOTFILES_TARBALL_PATH}
+  tar -zxf ${HOME}/dotfiles.tar.gz --strip-components 1 -C ${DOTFILES_PATH}
+  rm -rf ${HOME}/dotfiles.tar.gz
+else
+  printf "$(tput setaf 136)Dotfiles already installed\n"
+fi
+
+cd ${DOTFILES_PATH}
+
+source ./lib/utils
+source ./lib/oh_my_zsh
+
+if [[ $OSTYPE == "linux-gnu" ]]; then
+  source ./lib/apt
+fi
+
+# Test known flags
+for flag in $@
+do
+  case $flag in
+    --no-packages) no_packages=true ;;
+    --no-sync) no_sync=true ;;
+    -*|--*) warning "Warning: invalid option $flag" ;;
+  esac
+done
+
+if command_exists "git"; then
+  # Initialize the repo if it's missing
+  if ! is_git_repo; then
+    header "Initializing git repository..."
+    git init
+    git remote add origin ${DOTFILES_GIT_REMOTE}
+    git fetch origin master
+    git reset --hard FETCH_HEAD
+    success "Initialized git repository"
+  fi
+
+ # Sync the remote repository
+  if [[ $no_sync ]]; then
+    header "Skipped dotfiles sync"
+  else
+    header "Syncing dotfiles..."
+    git pull --rebase origin master
+    success "Synced dotfiles"
+  fi
+fi
+
+# Install packages
+if [[ $no_packages ]]; then
+  header "Skipped package installations"
+else
+  header "Installing packages..."
+  install_packages
+fi
+
+
+header "Installing oh-my-zsh..."
+install_oh_my_zsh
+
+# vim plug
+VIM_PATH="${HOME}/.vim"
+[ -d $HOME/.vim ] && mv $HOME/.vim $HOME/.vim.old
+
+curl -fLo "${VIM_PATH}/autoload/plug.vim" --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+[ -d $VIM_PATH/vimPlugins ] ||  mkdir $VIM_PATH/vimPlugins
+
+# Rename old dot files
+[ -f $HOME/.zshrc ] && mv $HOME/.zshrc $HOME/.zshrc.old
+[ -f $HOME/.vimrc ] && mv $HOME/.vimrc $HOME/.vimrc.old
+[ -f $HOME/.tmux.conf ] && mv $HOME/.tmux.conf $HOME/.tmux.conf.old
+
+# Create the symbolic links
+ln -fs "${DOTFILES_PATH}/git/gitignore" "${HOME}/.gitignore"
+ln -fs "${DOTFILES_PATH}/git/gitconfig" "${HOME}/.gitconfig"
+ln -fs "${DOTFILES_PATH}/shell/zshrc" "${HOME}/.zshrc"
+ln -fs "${DOTFILES_PATH}/shell/tmux_conf" "${HOME}/.tmux.conf"
+ln -fs "${DOTFILES_PATH}/shell/vimrc" "${HOME}/.vimrc"
+
+# install vim's plugings
+vim +PlugInstall +qall # > /dev/null # it's to exit the resul

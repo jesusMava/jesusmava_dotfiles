@@ -1,0 +1,19 @@
+export ZSH="/home/jesusmava/.oh-my-zsh"
+export EDITOR='vim'
+ZSH_THEME="robbyrussell"
+
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh  # This loads NVM
+
+
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#ffffff,bg:#121212,hl:#008cff --color=fg+:#dbdbdb,bg+:#525252,hl+:#17fc0f --color=info:#f5f500,prompt:#aceb0e,pointer:#af5fff --color=marker:#13ed13,spinner:#af5fff,header:#87afaf'
+

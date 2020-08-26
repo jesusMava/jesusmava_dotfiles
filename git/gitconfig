@@ -1,0 +1,9 @@
+[user]
+	email = jesusmacedo7@gmail.com
+	name = jesusMava
+[alias]
+	lg = log --oneline --decorate --all --graph
+	s = status -s -b
+	co = checkout
+[core]
+  excludesFile = /home/jesusmava/.gitignore

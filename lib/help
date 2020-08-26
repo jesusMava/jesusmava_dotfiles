@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+run_help() {
+
+  cat <<EOT
+  Dotfiles by Jesus Mava
+
+  Usage: $(basename "$0") [options]
+
+    Options:
+    -h,  --help        Prints the help
+    -np, --no-packages Suppress packages updates
+    -ns, --no-sync     Suppress pulling from the remote repository
+
+  Documentation can be found at https://github.com/jesusMava/dotfiles
+
+  EOT
+}

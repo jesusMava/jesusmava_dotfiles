@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Header logging
+header() {
+    printf "$(tput setaf 7)$(tput bold)%s$(tput sgr0)\n" "$@"
+}
+
+# Sucess logging
+success() {
+    printf "$(tput setaf 64)$(tput bold)✓ %s$(tput sgr0)\n" "$@"
+}
+
+# Error logging
+error() {
+    printf "$(tput setaf 1)$(tput bold)x %s$(tput sgr0)\n" "$@"
+}
+
+# Warning logging
+warning() {
+    printf "$(tput setaf 136)$(tput bold)! %s$(tput sgr0)\n" "$@"
+}
+
+# Test wheter you're in a git repository
+is_git_repo() {
+    $(git rev-parse --is-inside-work-tree &> /dev/null)
+}
+
+# Test if a command exists
+# $1 - cmd to test
+command_exists() {
+    command -v "$@" &>/dev/null
+}
