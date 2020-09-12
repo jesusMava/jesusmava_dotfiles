@@ -1,6 +1,8 @@
 # jesusmava_dotfiles
 By Jesus Mava
 
+For Ubuntu 18.04
+
 ## How to install
 
 Your old `.zshrc`, `.vimrc`, `.tmux_conf` will be rename with a suffix `.old`
@@ -43,6 +45,15 @@ chmod 600 ~/.ssh/id_rsa
 
 [Functions](/shell/functions)
 
+#TMUX
+
+## TPM
+
+[TPM](https://github.com/tmux-plugins/tpm)
+
+```
+cpu tpm
+```
 
 # vim plugins
 
