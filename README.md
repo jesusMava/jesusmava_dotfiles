@@ -45,7 +45,7 @@ chmod 600 ~/.ssh/id_rsa
 
 [Functions](/shell/functions)
 
-#TMUX
+# TMUX
 
 ## TPM
 
@@ -65,7 +65,7 @@ nerdtree
 
 ```
 install_nvm
-install_rvm
+install_rbenv
 ```
 
 # Troubleshooting
