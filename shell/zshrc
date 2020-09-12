@@ -2,7 +2,7 @@ export ZSH="/home/jesusmava/.oh-my-zsh"
 export EDITOR='vim'
 ZSH_THEME="robbyrussell"
 
-plugins=(git)
+plugins=(git tmux rails)
 
 source $ZSH/oh-my-zsh.sh
 

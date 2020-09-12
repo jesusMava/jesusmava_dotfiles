@@ -1,6 +1,10 @@
 filetype plugin indent on
 
 call plug#begin('~/.vim/vimPlugins')
+  Plug 'haya14busa/incsearch.vim'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'tpope/vim-commentary'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'bling/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -61,13 +65,25 @@ set smarttab
 set pastetoggle=<F2>
 set number
 set lazyredraw
+" when there is a wrong with delete,space keywords
+" set backspace=indent,eol,start
+
 "hightlight  curren line 
 hi CursorLine cterm=NONE ctermfg=NONE guibg=#181818 guifg=#dddddd ctermbg=black gui=bold
 hi Visual cterm=NONE ctermbg=0 ctermfg=NONE guibg=Grey40
 set cursorline
 
 " turn off highlighted
-nnoremap <F3> :set hlsearch!<CR>
+" nnoremap <F3> :set hlsearch!<CR>
+" change color Search
+hi Search cterm=NONE ctermfg=grey ctermbg=8
+
+" incsearch.vim
+set hlsearch
+nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
 " find merge conflict markers
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
@@ -81,6 +97,16 @@ set nobackup
 set nowritebackup
 set noswapfile
 set statusline+=%F
+
+" Gitgutter
+set updatetime=100
+
+nmap <Leader>hv <Plug>GitGutterPreviewHunk
+
+highlight! link SignColumn LineNr
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 "FZF
 let g:fzf_action = {
