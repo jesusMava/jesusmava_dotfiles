@@ -33,7 +33,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#empty_message = ''
-let g:airline#extensions#branch#displayed_head_limit = 6
+let g:airline#extensions#branch#displayed_head_limit = 10
 let g:airline#extensions#branch#format = 0
 let g:gruvbox_contrast_dark = 'hard'
 let g:lightline = {}
@@ -47,6 +47,9 @@ let mapleader=" "
 let g:user_emmet_leader_key=','
 
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/build/*,*/node_modules/*
+
+" keep conceal setting, show markdown and json format
+let g:indentLine_setConceal = 0
 
 " --- list chars ---
 "  " list spaces and tabs to avoid trailing spaces and mixed indentation
@@ -106,7 +109,7 @@ nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 "nerdtree charge when your open vim
 "autocmd vimenter * NERDTree
 let NERDTreeWinSize = 17
-nmap <F6> :NERDTreeToggle<CR>
+nmap <leader>ne :NERDTreeToggle<CR>
 
 set nobackup
 set nowritebackup
